@@ -5,9 +5,9 @@ VisualStudioVersion = 17.12.35424.110
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Riverside.Standard", "Standard\Riverside.Standard.csproj", "{3374DB5D-B00A-4B47-AFCD-027A059A03B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Riverside.Runtime", "Riverside.Runtime\Riverside.Runtime.csproj", "{C228A4BB-9DD4-4F8A-9DF5-A52284F45C4A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Riverside.Runtime", "Runtime\Riverside.Runtime.csproj", "{C228A4BB-9DD4-4F8A-9DF5-A52284F45C4A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Riverside.Runtime.Partial", "Riverside.Runtime.Partial\Riverside.Runtime.Partial.csproj", "{6279AA43-DD73-4B42-BAB7-B4417FF33638}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Riverside.Runtime.Partial", "Runtime.Partial\Riverside.Runtime.Partial.csproj", "{6279AA43-DD73-4B42-BAB7-B4417FF33638}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
