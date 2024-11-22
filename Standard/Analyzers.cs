@@ -10,7 +10,7 @@ namespace Riverside.Standard
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class Analyzers : DiagnosticAnalyzer
     {
-        public const string DiagnosticId = "RVSX0001";
+        public const string DiagnosticId = "RX00001";
         private static readonly LocalizableString Title = "Class must derive from Riverside.Runtime.AppEx";
         private static readonly LocalizableString MessageFormat = "Class '{0}' must derive from Riverside.Runtime.AppEx";
         private static readonly LocalizableString Description = "Ensure that App class derives from Riverside.Runtime.AppEx.";
@@ -40,8 +40,8 @@ namespace Riverside.Standard
                     return;
                 }
 
-                // Check if the class derives from "Riverside.Runtime.AppEx"
-                if (!ClassInteractions.DerivesFrom(baseType, "Riverside.Runtime.AppEx", context.SemanticModel))
+                // Check if the class derives from "Riverside.Runtime.Modern.UnifiedApp"
+                if (!ClassInteractions.DerivesFrom(baseType, "Riverside.Runtime.Modern.UnifiedApp", context.SemanticModel))
                 {
                     Diagnostic diagnostic = Diagnostic.Create(Rule, classDeclaration.Identifier.GetLocation(), classDeclaration.Identifier.Text);
                     context.ReportDiagnostic(diagnostic);
