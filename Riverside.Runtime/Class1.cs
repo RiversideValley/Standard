@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Riverside.Standard
+namespace Riverside.Runtime
 {
     public class Class1
     {

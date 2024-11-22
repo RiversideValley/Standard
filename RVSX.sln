@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35424.110 d17.12
+VisualStudioVersion = 17.12.35424.110
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Riverside.Standard", "Standard\Riverside.Standard.csproj", "{3374DB5D-B00A-4B47-AFCD-027A059A03B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Riverside.Runtime", "Riverside.Runtime\Riverside.Runtime.csproj", "{C228A4BB-9DD4-4F8A-9DF5-A52284F45C4A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{3374DB5D-B00A-4B47-AFCD-027A059A03B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3374DB5D-B00A-4B47-AFCD-027A059A03B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3374DB5D-B00A-4B47-AFCD-027A059A03B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C228A4BB-9DD4-4F8A-9DF5-A52284F45C4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C228A4BB-9DD4-4F8A-9DF5-A52284F45C4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C228A4BB-9DD4-4F8A-9DF5-A52284F45C4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C228A4BB-9DD4-4F8A-9DF5-A52284F45C4A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
