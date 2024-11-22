@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Riverside.Standard", "Stand
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Riverside.Runtime", "Runtime\Riverside.Runtime.csproj", "{C228A4BB-9DD4-4F8A-9DF5-A52284F45C4A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Riverside.Runtime.Partial", "Runtime.Partial\Riverside.Runtime.Partial.csproj", "{6279AA43-DD73-4B42-BAB7-B4417FF33638}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Riverside.Runtime.Modern", "Modern\Riverside.Runtime.Modern.csproj", "{6279AA43-DD73-4B42-BAB7-B4417FF33638}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
