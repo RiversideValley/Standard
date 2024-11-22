@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace Riverside.Runtime
 {
+    /// <summary>
+    /// Provides various methods to fetch data with different rate limiting and retry policies.
+    /// This class serves as an example for the various functions Riverside.Runtime exposes.
+    /// </summary>
     public class Http
     {
         private static readonly HttpClient _httpClient = new();
@@ -34,6 +38,12 @@ namespace Riverside.Runtime
         private static readonly DynamicTokenBucketRateLimiter _dynamicTokenBucketRateLimiter = new(10, 1, TimeSpan.FromSeconds(1)); // 10 tokens, 1 token per second
         private static readonly ExponentialBackoffRateLimiter _exponentialBackoffRateLimiter = new(5, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(30)); // 5 retries, initial delay 1 second, max delay 30 seconds
 
+        /// <summary>
+        /// Fetches data from the specified URL.
+        /// </summary>
+        /// <param name="url">The URL to fetch data from.</param>
+        /// <param name="cancellationToken">A token to cancel the operation.</param>
+        /// <returns>The fetched data as a string.</returns>
         public static async Task<string> FetchDataAsync(string url, CancellationToken cancellationToken = default)
         {
             HttpResponseMessage response = await _httpClient.GetAsync(url, cancellationToken);
@@ -46,6 +56,12 @@ namespace Riverside.Runtime
             return FetchDataAsync(url);
         }
 
+        /// <summary>
+        /// Fetches data with a retry policy.
+        /// </summary>
+        /// <param name="url">The URL to fetch data from.</param>
+        /// <param name="cancellationToken">A token to cancel the operation.</param>
+        /// <returns>The fetched data as a string.</returns>
         public static async Task<string> FetchDataWithRetryAsync(string url, CancellationToken cancellationToken = default)
         {
             return await RetryPolicy.ExecuteAsync(async () =>
@@ -56,6 +72,12 @@ namespace Riverside.Runtime
             });
         }
 
+        /// <summary>
+        /// Fetches data with a circuit breaker policy.
+        /// </summary>
+        /// <param name="url">The URL to fetch data from.</param>
+        /// <param name="cancellationToken">A token to cancel the operation.</param>
+        /// <returns>The fetched data as a string.</returns>
         public static async Task<string> FetchDataWithCircuitBreakerAsync(string url, CancellationToken cancellationToken = default)
         {
             return await _circuitBreaker.ExecuteAsync(async () =>
@@ -66,6 +88,12 @@ namespace Riverside.Runtime
             });
         }
 
+        /// <summary>
+        /// Fetches data with a rate limiter.
+        /// </summary>
+        /// <param name="url">The URL to fetch data from.</param>
+        /// <param name="cancellationToken">A token to cancel the operation.</param>
+        /// <returns>The fetched data as a string.</returns>
         public static async Task<string> FetchDataWithRateLimiterAsync(string url, CancellationToken cancellationToken = default)
         {
             return await _rateLimiter.ExecuteAsync(async () =>
@@ -76,11 +104,22 @@ namespace Riverside.Runtime
             }, cancellationToken);
         }
 
+        /// <summary>
+        /// Fetches data with memoization.
+        /// </summary>
+        /// <param name="url">The URL to fetch data from.</param>
+        /// <param name="cancellationToken">A token to cancel the operation.</param>
+        /// <returns>The fetched data as a string.</returns>
         public static async Task<string> FetchDataMemoizedAsync(string url, CancellationToken cancellationToken = default)
         {
             return await _fetchDataMemoized(url);
         }
 
+        /// <summary>
+        /// Fetches data with a debounce policy.
+        /// </summary>
+        /// <param name="url">The URL to fetch data from.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
         public static async Task FetchDataDebouncedAsync(string url)
         {
             await _debouncer.DebounceAsync(async () =>
@@ -91,6 +130,12 @@ namespace Riverside.Runtime
             });
         }
 
+        /// <summary>
+        /// Fetches data with a throttle policy.
+        /// </summary>
+        /// <param name="url">The URL to fetch data from.</param>
+        /// <param name="cancellationToken">A token to cancel the operation.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
         public static async Task FetchDataThrottledAsync(string url, CancellationToken cancellationToken = default)
         {
             await _throttler.ThrottleAsync(async () =>
@@ -101,6 +146,13 @@ namespace Riverside.Runtime
             }, cancellationToken);
         }
 
+        /// <summary>
+        /// Fetches data with a timeout policy.
+        /// </summary>
+        /// <param name="url">The URL to fetch data from.</param>
+        /// <param name="timeout">The timeout duration.</param>
+        /// <param name="cancellationToken">A token to cancel the operation.</param>
+        /// <returns>The fetched data as a string.</returns>
         public static async Task<string> FetchDataWithTimeoutAsync(string url, TimeSpan timeout, CancellationToken cancellationToken = default)
         {
             return await TimeoutPolicy.ExecuteAsync(async ct =>
@@ -111,6 +163,12 @@ namespace Riverside.Runtime
             }, timeout);
         }
 
+        /// <summary>
+        /// Fetches data with a bulkhead policy.
+        /// </summary>
+        /// <param name="url">The URL to fetch data from.</param>
+        /// <param name="cancellationToken">A token to cancel the operation.</param>
+        /// <returns>The fetched data as a string.</returns>
         public static async Task<string> FetchDataWithBulkheadAsync(string url, CancellationToken cancellationToken = default)
         {
             return await _bulkhead.ExecuteAsync(async () =>
@@ -121,6 +179,12 @@ namespace Riverside.Runtime
             }, cancellationToken);
         }
 
+        /// <summary>
+        /// Fetches data with caching.
+        /// </summary>
+        /// <param name="url">The URL to fetch data from.</param>
+        /// <param name="cancellationToken">A token to cancel the operation.</param>
+        /// <returns>The fetched data as a string.</returns>
         public static async Task<string> FetchDataWithCacheAsync(string url, CancellationToken cancellationToken = default)
         {
             return await _cache.GetOrAddAsync(url, async () =>
@@ -131,6 +195,12 @@ namespace Riverside.Runtime
             });
         }
 
+        /// <summary>
+        /// Fetches data with exponential backoff retry policy.
+        /// </summary>
+        /// <param name="url">The URL to fetch data from.</param>
+        /// <param name="cancellationToken">A token to cancel the operation.</param>
+        /// <returns>The fetched data as a string.</returns>
         public static async Task<string> FetchDataWithExponentialBackoffAsync(string url, CancellationToken cancellationToken = default)
         {
             return await ExponentialBackoffRetryPolicy.ExecuteAsync(async () =>
@@ -141,6 +211,12 @@ namespace Riverside.Runtime
             }, maxRetries: 5, initialDelay: TimeSpan.FromSeconds(1), cancellationToken: cancellationToken);
         }
 
+        /// <summary>
+        /// Fetches data with a sliding window rate limiter.
+        /// </summary>
+        /// <param name="url">The URL to fetch data from.</param>
+        /// <param name="cancellationToken">A token to cancel the operation.</param>
+        /// <returns>The fetched data as a string.</returns>
         public static async Task<string> FetchDataWithSlidingWindowRateLimiterAsync(string url, CancellationToken cancellationToken = default)
         {
             return await _slidingWindowRateLimiter.ExecuteAsync(async () =>
@@ -151,6 +227,12 @@ namespace Riverside.Runtime
             }, cancellationToken);
         }
 
+        /// <summary>
+        /// Fetches data with a semaphore lock.
+        /// </summary>
+        /// <param name="url">The URL to fetch data from.</param>
+        /// <param name="cancellationToken">A token to cancel the operation.</param>
+        /// <returns>The fetched data as a string.</returns>
         public static async Task<string> FetchDataWithSemaphoreLockAsync(string url, CancellationToken cancellationToken = default)
         {
             return await _semaphoreLock.ExecuteAsync(async () =>
@@ -161,6 +243,12 @@ namespace Riverside.Runtime
             }, cancellationToken);
         }
 
+        /// <summary>
+        /// Fetches data with an advanced circuit breaker policy.
+        /// </summary>
+        /// <param name="url">The URL to fetch data from.</param>
+        /// <param name="cancellationToken">A token to cancel the operation.</param>
+        /// <returns>The fetched data as a string.</returns>
         public static async Task<string> FetchDataWithAdvancedCircuitBreakerAsync(string url, CancellationToken cancellationToken = default)
         {
             return await _advancedCircuitBreaker.ExecuteAsync(async () =>
@@ -171,6 +259,12 @@ namespace Riverside.Runtime
             });
         }
 
+        /// <summary>
+        /// Fetches data with a token bucket rate limiter.
+        /// </summary>
+        /// <param name="url">The URL to fetch data from.</param>
+        /// <param name="cancellationToken">A token to cancel the operation.</param>
+        /// <returns>The fetched data as a string.</returns>
         public static async Task<string> FetchDataWithTokenBucketRateLimiterAsync(string url, CancellationToken cancellationToken = default)
         {
             return await _tokenBucketRateLimiter.ExecuteAsync(async () =>
@@ -181,17 +275,33 @@ namespace Riverside.Runtime
             }, cancellationToken);
         }
 
+        /// <summary>
+        /// Enqueues a request with a specified priority.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="priority">The priority of the request.</param>
         public static void EnqueueRequest(string url, int priority)
         {
             _priorityQueue.Enqueue((url, priority), priority);
         }
 
+        /// <summary>
+        /// Processes the next request in the priority queue.
+        /// </summary>
+        /// <param name="cancellationToken">A token to cancel the operation.</param>
+        /// <returns>The fetched data as a string.</returns>
         public static async Task<string> ProcessNextRequestAsync(CancellationToken cancellationToken = default)
         {
             var (url, priority) = _priorityQueue.Dequeue();
             return await FetchDataAsync(url, cancellationToken);
         }
 
+        /// <summary>
+        /// Fetches data with a leaky bucket rate limiter.
+        /// </summary>
+        /// <param name="url">The URL to fetch data from.</param>
+        /// <param name="cancellationToken">A token to cancel the operation.</param>
+        /// <returns>The fetched data as a string.</returns>
         public static async Task<string> FetchDataWithLeakyBucketRateLimiterAsync(string url, CancellationToken cancellationToken = default)
         {
             return await _leakyBucketRateLimiter.ExecuteAsync(async () =>
@@ -202,11 +312,22 @@ namespace Riverside.Runtime
             }, cancellationToken);
         }
 
+        /// <summary>
+        /// Enqueues a task with a specified priority.
+        /// </summary>
+        /// <param name="task">The task to enqueue.</param>
+        /// <param name="priority">The priority of the task.</param>
         public static void EnqueueTask(Func<Task> task, int priority)
         {
             _priorityTaskScheduler.EnqueueTask(task, priority);
         }
 
+        /// <summary>
+        /// Fetches data with a fixed window rate limiter.
+        /// </summary>
+        /// <param name="url">The URL to fetch data from.</param>
+        /// <param name="cancellationToken">A token to cancel the operation.</param>
+        /// <returns>The fetched data as a string.</returns>
         public static async Task<string> FetchDataWithFixedWindowRateLimiterAsync(string url, CancellationToken cancellationToken = default)
         {
             return await _fixedWindowRateLimiter.ExecuteAsync(async () =>
@@ -217,12 +338,23 @@ namespace Riverside.Runtime
             }, cancellationToken);
         }
 
+        /// <summary>
+        /// Fetches data using a weighted round-robin scheduler.
+        /// </summary>
+        /// <param name="cancellationToken">A token to cancel the operation.</param>
+        /// <returns>The fetched data as a string.</returns>
         public static async Task<string> FetchDataWithWeightedRoundRobinAsync(CancellationToken cancellationToken = default)
         {
             string serverUrl = _weightedRoundRobinScheduler.GetNext();
             return await FetchDataAsync(serverUrl, cancellationToken);
         }
 
+        /// <summary>
+        /// Fetches data with a jitter retry policy.
+        /// </summary>
+        /// <param name="url">The URL to fetch data from.</param>
+        /// <param name="cancellationToken">A token to cancel the operation.</param>
+        /// <returns>The fetched data as a string.</returns>
         public static async Task<string> FetchDataWithJitterRetryAsync(string url, CancellationToken cancellationToken = default)
         {
             return await JitterRetryPolicy.ExecuteAsync(async () =>
@@ -233,6 +365,12 @@ namespace Riverside.Runtime
             }, maxRetries: 5, initialDelay: TimeSpan.FromSeconds(1), cancellationToken: cancellationToken);
         }
 
+        /// <summary>
+        /// Fetches data with a sliding log rate limiter.
+        /// </summary>
+        /// <param name="url">The URL to fetch data from.</param>
+        /// <param name="cancellationToken">A token to cancel the operation.</param>
+        /// <returns>The fetched data as a string.</returns>
         public static async Task<string> FetchDataWithSlidingLogRateLimiterAsync(string url, CancellationToken cancellationToken = default)
         {
             return await _slidingLogRateLimiter.ExecuteAsync(async () =>
@@ -243,6 +381,12 @@ namespace Riverside.Runtime
             }, cancellationToken);
         }
 
+        /// <summary>
+        /// Fetches data with a dynamic token bucket rate limiter.
+        /// </summary>
+        /// <param name="url">The URL to fetch data from.</param>
+        /// <param name="cancellationToken">A token to cancel the operation.</param>
+        /// <returns>The fetched data as a string.</returns>
         public static async Task<string> FetchDataWithDynamicTokenBucketRateLimiterAsync(string url, CancellationToken cancellationToken = default)
         {
             return await _dynamicTokenBucketRateLimiter.ExecuteAsync(async () =>
@@ -253,11 +397,20 @@ namespace Riverside.Runtime
             }, cancellationToken);
         }
 
+        /// <summary>
+        /// Updates the rate limit of the dynamic token bucket rate limiter.
+        /// </summary>
         public static void UpdateRateLimit(int newBucketCapacity, int newTokensPerInterval)
         {
             _dynamicTokenBucketRateLimiter.UpdateRateLimit(newBucketCapacity, newTokensPerInterval);
         }
 
+        /// <summary>
+        /// Fetches data with an exponential backoff rate limiter.
+        /// </summary>
+        /// <param name="url">The URL to fetch data from.</param>
+        /// <param name="cancellationToken">A token to cancel the operation.</param>
+        /// <returns>The fetched data as a string.</returns>
         public static async Task<string> FetchDataWithExponentialBackoffRateLimiterAsync(string url, CancellationToken cancellationToken = default)
         {
             return await _exponentialBackoffRateLimiter.ExecuteAsync(async () =>
@@ -267,5 +420,6 @@ namespace Riverside.Runtime
                 return await response.Content.ReadAsStringAsync();
             }, cancellationToken);
         }
+
     }
 }
