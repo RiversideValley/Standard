@@ -18,16 +18,16 @@ namespace Riverside.Runtime.Modern.Helpers
 
         public static void HandleActivation(string arguments, Dictionary<string, Window> windows)
         {
-            var rootFrame = new Frame();
+            Frame rootFrame = new();
             rootFrame.NavigationFailed += OnNavigationFailed;
 
             if (arguments != null)
             {
                 // Handle command line arguments
-                var rootCommand = new RootCommand
-                {
+                RootCommand rootCommand =
+                [
                     new Option<string>("--example", "An example option")
-                };
+                ];
 
                 rootCommand.Handler = CommandHandler.Create<string>((example) =>
                 {
@@ -35,11 +35,13 @@ namespace Riverside.Runtime.Modern.Helpers
                     Console.WriteLine($"Example option: {example}");
                 });
 
-                rootCommand.Invoke(arguments);
+                _ = rootCommand.Invoke(arguments);
             }
 
-            var mainWindow = new Window();
-            mainWindow.Content = rootFrame;
+            Window mainWindow = new()
+            {
+                Content = rootFrame
+            };
             mainWindow.Activate();
 
             windows["Main"] = mainWindow;

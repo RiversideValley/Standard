@@ -17,17 +17,17 @@ namespace Riverside.Runtime.Modern
         /// <summary>
         /// Dictionary to keep track of open windows.
         /// </summary>
-        public Dictionary<string, Window> _windows = new Dictionary<string, Window>();
+        public Dictionary<string, Window> _windows = [];
 
         /// <summary>
         /// Gets the current instance of the <see cref="UnifiedApp"/>.
         /// </summary>
-        public new static UnifiedApp Current => (UnifiedApp)Application.Current;
+        public static new UnifiedApp Current => (UnifiedApp)Application.Current;
 
         /// <summary>
         /// Gets the application version.
         /// </summary>
-        public readonly static string AppVersion =
+        public static readonly string AppVersion =
             $"{Package.Current.Id.Version.Major}." +
             $"{Package.Current.Id.Version.Minor}." +
             $"{Package.Current.Id.Version.Build}." +
@@ -60,7 +60,7 @@ namespace Riverside.Runtime.Modern
         {
             if (args.Kind == ActivationKind.Protocol)
             {
-                var protocolArgs = args as ProtocolActivatedEventArgs;
+                ProtocolActivatedEventArgs protocolArgs = args as ProtocolActivatedEventArgs;
                 Activation.HandleProtocolActivation(protocolArgs.Uri);
             }
         }
@@ -79,9 +79,9 @@ namespace Riverside.Runtime.Modern
                 return;
             }
 
-            var newWindow = new Window();
-            var frame = new Frame();
-            frame.Navigate(pageType, parameter);
+            Window newWindow = new();
+            Frame frame = new();
+            _ = frame.Navigate(pageType, parameter);
             newWindow.Content = frame;
             newWindow.Activate();
 
@@ -95,7 +95,7 @@ namespace Riverside.Runtime.Modern
         /// <param name="e">Details about the suspend request.</param>
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
-            var deferral = e.SuspendingOperation.GetDeferral();
+            SuspendingDeferral deferral = e.SuspendingOperation.GetDeferral();
             // TODO: Save application state and stop any background activity
             deferral.Complete();
         }

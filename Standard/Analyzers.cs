@@ -17,7 +17,7 @@ namespace Riverside.Standard
         private const string Category = "Naming";
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DiagnosticId, Title, MessageFormat, Category, DiagnosticSeverity.Warning, isEnabledByDefault: true, description: Description);
 
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get { return ImmutableArray.Create(Rule); } }
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
         public override void Initialize(AnalysisContext context)
         {
@@ -28,13 +28,13 @@ namespace Riverside.Standard
 
         private static void AnalyzeNode(SyntaxNodeAnalysisContext context)
         {
-            var classDeclaration = (ClassDeclarationSyntax)context.Node;
+            ClassDeclarationSyntax classDeclaration = (ClassDeclarationSyntax)context.Node;
 
             // Check if the class is named "App"
             if (classDeclaration.Identifier.Text == "App")
             {
                 // Check if the class derives from "Microsoft.UI.Xaml.Application"
-                var baseType = classDeclaration.BaseList?.Types.FirstOrDefault()?.Type;
+                TypeSyntax baseType = classDeclaration.BaseList?.Types.FirstOrDefault()?.Type;
                 if (baseType == null || !ClassInteractions.DerivesFrom(baseType, "Microsoft.UI.Xaml.Application", context.SemanticModel))
                 {
                     return;
@@ -43,7 +43,7 @@ namespace Riverside.Standard
                 // Check if the class derives from "Riverside.Runtime.AppEx"
                 if (!ClassInteractions.DerivesFrom(baseType, "Riverside.Runtime.AppEx", context.SemanticModel))
                 {
-                    var diagnostic = Diagnostic.Create(Rule, classDeclaration.Identifier.GetLocation(), classDeclaration.Identifier.Text);
+                    Diagnostic diagnostic = Diagnostic.Create(Rule, classDeclaration.Identifier.GetLocation(), classDeclaration.Identifier.Text);
                     context.ReportDiagnostic(diagnostic);
                 }
             }

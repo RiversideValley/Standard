@@ -18,7 +18,7 @@ namespace Riverside.Standard.Helpers
         /// <returns><c>true</c> if the specified type syntax derives from the specified base type name; otherwise, <c>false</c>.</returns>
         public static bool DerivesFrom(TypeSyntax typeSyntax, string baseTypeName, SemanticModel semanticModel)
         {
-            var typeSymbol = semanticModel.GetSymbolInfo(typeSyntax).Symbol as INamedTypeSymbol;
+            INamedTypeSymbol typeSymbol = semanticModel.GetSymbolInfo(typeSyntax).Symbol as INamedTypeSymbol;
             while (typeSymbol != null)
             {
                 if (typeSymbol.ToString() == baseTypeName)
