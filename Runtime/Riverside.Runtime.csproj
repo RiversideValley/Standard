@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
+		<LangVersion>13.0</LangVersion>
 		<RootNamespace>Riverside.Runtime</RootNamespace>
 
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -34,5 +35,9 @@
 			<Pack>True</Pack>
 			<PackagePath>\</PackagePath>
 		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="System.Text.Json" Version="9.0.0" />
 	</ItemGroup>
 </Project>
