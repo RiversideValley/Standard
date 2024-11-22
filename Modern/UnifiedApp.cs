@@ -6,22 +6,36 @@ using Riverside.Runtime.Modern.Helpers;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel;
 
-// Excuse half of this code being copied directly from Files and FluentHub :D
-
 namespace Riverside.Runtime.Modern
 {
+    /// <summary>
+    /// Represents the application class that provides multiple windowing support,
+    /// protocol activation handling, and command line integration.
+    /// </summary>
     public partial class UnifiedApp : Application
     {
-        public Dictionary<string, Window> _windows = [];
-        public new static UnifiedApp Current
-            => (UnifiedApp)UnifiedApp.Current;
+        /// <summary>
+        /// Dictionary to keep track of open windows.
+        /// </summary>
+        public Dictionary<string, Window> _windows = new Dictionary<string, Window>();
 
+        /// <summary>
+        /// Gets the current instance of the <see cref="UnifiedApp"/>.
+        /// </summary>
+        public new static UnifiedApp Current => (UnifiedApp)Application.Current;
+
+        /// <summary>
+        /// Gets the application version.
+        /// </summary>
         public readonly static string AppVersion =
             $"{Package.Current.Id.Version.Major}." +
             $"{Package.Current.Id.Version.Minor}." +
             $"{Package.Current.Id.Version.Build}." +
             $"{Package.Current.Id.Version.Revision}";
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UnifiedApp"/> class.
+        /// </summary>
         public UnifiedApp()
         {
             // this.InitializeComponent();
@@ -29,11 +43,19 @@ namespace Riverside.Runtime.Modern
             // this.Suspending += OnSuspending;
         }
 
+        /// <summary>
+        /// Invoked when the application is launched.
+        /// </summary>
+        /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             Activation.HandleActivation(args.Arguments, _windows);
         }
 
+        /// <summary>
+        /// Invoked when the application is activated.
+        /// </summary>
+        /// <param name="args">Details about the activation request and process.</param>
         protected void OnActivated(IActivatedEventArgs args)
         {
             if (args.Kind == ActivationKind.Protocol)
@@ -43,6 +65,12 @@ namespace Riverside.Runtime.Modern
             }
         }
 
+        /// <summary>
+        /// Opens a new window with the specified key, page type, and optional parameter.
+        /// </summary>
+        /// <param name="windowKey">The key to identify the window.</param>
+        /// <param name="pageType">The type of the page to navigate to.</param>
+        /// <param name="parameter">The parameter to pass to the page.</param>
         public void OpenNewWindow(string windowKey, Type pageType, object parameter = null)
         {
             if (_windows.TryGetValue(windowKey, out Window value))
@@ -60,6 +88,11 @@ namespace Riverside.Runtime.Modern
             _windows[windowKey] = newWindow;
         }
 
+        /// <summary>
+        /// Invoked when the application execution is being suspended.
+        /// </summary>
+        /// <param name="sender">The source of the suspend request.</param>
+        /// <param name="e">Details about the suspend request.</param>
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
