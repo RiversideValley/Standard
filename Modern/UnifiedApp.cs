@@ -1,10 +1,10 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Riverside.Runtime.Modern.Helpers;
 using System;
 using System.Collections.Generic;
-using Riverside.Runtime.Modern.Helpers;
-using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel;
+using Windows.ApplicationModel.Activation;
 
 namespace Riverside.Runtime.Modern
 {

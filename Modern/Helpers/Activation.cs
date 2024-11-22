@@ -1,12 +1,10 @@
-﻿using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml;
-using System;
-using System.CommandLine.NamingConventionBinder;
-using System.CommandLine;
-using Windows.ApplicationModel.Activation;
-using Riverside.Runtime.Modern;
+﻿using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
+using System;
 using System.Collections.Generic;
+using System.CommandLine;
+using System.CommandLine.NamingConventionBinder;
 
 namespace Riverside.Runtime.Modern.Helpers
 {
