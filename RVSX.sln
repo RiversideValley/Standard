@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Riverside.Standard", "Stand
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Riverside.Runtime", "Riverside.Runtime\Riverside.Runtime.csproj", "{C228A4BB-9DD4-4F8A-9DF5-A52284F45C4A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Riverside.Runtime.Partial", "Riverside.Runtime.Partial\Riverside.Runtime.Partial.csproj", "{6279AA43-DD73-4B42-BAB7-B4417FF33638}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{C228A4BB-9DD4-4F8A-9DF5-A52284F45C4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C228A4BB-9DD4-4F8A-9DF5-A52284F45C4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C228A4BB-9DD4-4F8A-9DF5-A52284F45C4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6279AA43-DD73-4B42-BAB7-B4417FF33638}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6279AA43-DD73-4B42-BAB7-B4417FF33638}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6279AA43-DD73-4B42-BAB7-B4417FF33638}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6279AA43-DD73-4B42-BAB7-B4417FF33638}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
