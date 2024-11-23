@@ -29,6 +29,7 @@ Previous versions of the Riverside Standard had a different versioning system as
 
 The first version of the Standard (River1) included requirements across everywhere - PRs, issues and commits were forced to have emoji appended to them; it had its own set of open source licenses; and most importantly versioning:
 > The _River1_ convention stated that each version should use the following format:
+> 
 > | Major | . | Minor | . | Build No. | @ | Channel |
 > |--------|--------|--------|--------|--------|--------|--------|
 > | 1 | **.** | 2 | **.** | 3 | **@** | `dev` |
