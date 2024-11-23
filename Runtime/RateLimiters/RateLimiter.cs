@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Riverside.Runtime
+namespace Riverside.Runtime.RateLimiters
 {
     /// <summary>
     /// Provides a rate limiter to control the rate of operations.
@@ -28,7 +28,7 @@ namespace Riverside.Runtime
                 DateTime now = DateTime.UtcNow;
 
                 // Remove timestamps outside the time window
-                while (_requestTimestamps.TryPeek(out DateTime timestamp) && (now - timestamp) > _timeWindow)
+                while (_requestTimestamps.TryPeek(out DateTime timestamp) && now - timestamp > _timeWindow)
                 {
                     _ = _requestTimestamps.TryDequeue(out _);
                 }

@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Riverside.Runtime
+namespace Riverside.Runtime.Policies
 {
     /// <summary>
     /// Provides a timeout policy to handle operations that exceed a specified time limit.

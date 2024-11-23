@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Riverside.Runtime
+namespace Riverside.Runtime.Circuits
 {
     /// <summary>
     /// Represents a circuit breaker that can be used to protect resources from being overwhelmed.
