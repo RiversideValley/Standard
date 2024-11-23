@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ namespace Riverside.Runtime
 {
     public class PriorityTaskScheduler(int maxConcurrentTasks)
     {
-        private readonly ConcurrentDictionary<int, Queue<Func<Task>>> _taskQueues = new ConcurrentDictionary<int, Queue<Func<Task>>>();
+        private readonly ConcurrentDictionary<int, Queue<Func<Task>>> _taskQueues = new();
         private readonly SemaphoreSlim _semaphore = new(maxConcurrentTasks, maxConcurrentTasks);
         private readonly object _lock = new();
 
