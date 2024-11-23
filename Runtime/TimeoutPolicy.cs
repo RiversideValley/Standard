@@ -19,11 +19,11 @@ namespace Riverside.Runtime
         /// <exception cref="TimeoutException">Thrown when the operation exceeds the specified timeout.</exception>
         public static async Task<T> ExecuteAsync<T>(Func<CancellationToken, Task<T>> operation, TimeSpan timeout)
         {
-            using var cts = new CancellationTokenSource();
-            var timeoutTask = Task.Delay(timeout, cts.Token);
-            var operationTask = operation(cts.Token);
+            using CancellationTokenSource cts = new();
+            Task timeoutTask = Task.Delay(timeout, cts.Token);
+            Task<T> operationTask = operation(cts.Token);
 
-            var completedTask = await Task.WhenAny(operationTask, timeoutTask);
+            Task completedTask = await Task.WhenAny(operationTask, timeoutTask);
 
             if (completedTask == timeoutTask)
             {

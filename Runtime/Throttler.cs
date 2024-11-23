@@ -11,7 +11,7 @@ namespace Riverside.Runtime
     /// <param name="timeWindow">The time window for the rate limit.</param>
     public class Throttler(int maxRequests, TimeSpan timeWindow)
     {
-        private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(maxRequests, maxRequests);
+        private readonly SemaphoreSlim _semaphore = new(maxRequests, maxRequests);
         private readonly TimeSpan _timeWindow = timeWindow;
         private DateTime _lastExecutionTime = DateTime.MinValue;
 
@@ -40,7 +40,7 @@ namespace Riverside.Runtime
             }
             finally
             {
-                _semaphore.Release();
+                _ = _semaphore.Release();
             }
         }
     }

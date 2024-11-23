@@ -24,10 +24,12 @@ namespace Riverside.Runtime
         public static async Task<T> ExecuteAsync<T>(Func<Task<T>> operation, int maxRetries = 5, TimeSpan? initialDelay = null, CancellationToken cancellationToken = default)
         {
             if (maxRetries < 1)
+            {
                 throw new ArgumentOutOfRangeException(nameof(maxRetries), "Max retries must be greater than or equal to 1.");
+            }
 
             initialDelay ??= TimeSpan.FromSeconds(1);
-            var delay = initialDelay.Value;
+            TimeSpan delay = initialDelay.Value;
 
             for (int attempt = 1; attempt <= maxRetries; attempt++)
             {
@@ -54,7 +56,7 @@ namespace Riverside.Runtime
         /// <returns>The delay with added jitter.</returns>
         private static TimeSpan AddJitter(TimeSpan delay)
         {
-            var jitter = TimeSpan.FromMilliseconds(_random.Next(0, (int)delay.TotalMilliseconds));
+            TimeSpan jitter = TimeSpan.FromMilliseconds(_random.Next(0, (int)delay.TotalMilliseconds));
             return delay + jitter;
         }
     }

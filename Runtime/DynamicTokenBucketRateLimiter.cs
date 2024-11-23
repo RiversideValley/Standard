@@ -56,12 +56,12 @@ namespace Riverside.Runtime
         /// </summary>
         private void RefillTokens()
         {
-            var now = DateTime.UtcNow;
-            var timeSinceLastRefill = now - _lastRefill;
+            DateTime now = DateTime.UtcNow;
+            TimeSpan timeSinceLastRefill = now - _lastRefill;
 
             if (timeSinceLastRefill > _interval)
             {
-                var tokensToAdd = (int)(timeSinceLastRefill.TotalMilliseconds / _interval.TotalMilliseconds) * _tokensPerInterval;
+                int tokensToAdd = (int)(timeSinceLastRefill.TotalMilliseconds / _interval.TotalMilliseconds) * _tokensPerInterval;
                 _tokens = Math.Min(_bucketCapacity, _tokens + tokensToAdd);
                 _lastRefill = now;
             }

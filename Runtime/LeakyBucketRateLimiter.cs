@@ -40,12 +40,12 @@ namespace Riverside.Runtime
         /// </summary>
         private void Leak()
         {
-            var now = DateTime.UtcNow;
-            var timeSinceLastLeak = now - _lastLeakTime;
+            DateTime now = DateTime.UtcNow;
+            TimeSpan timeSinceLastLeak = now - _lastLeakTime;
 
             if (timeSinceLastLeak > _leakInterval)
             {
-                var leaks = (int)(timeSinceLastLeak.TotalMilliseconds / _leakInterval.TotalMilliseconds);
+                int leaks = (int)(timeSinceLastLeak.TotalMilliseconds / _leakInterval.TotalMilliseconds);
                 _currentBucketSize = Math.Max(0, _currentBucketSize - leaks);
                 _lastLeakTime = now;
             }

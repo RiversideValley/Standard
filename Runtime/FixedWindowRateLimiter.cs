@@ -27,24 +27,24 @@ namespace Riverside.Runtime
                 DateTime windowStart = now - _timeWindow;
 
                 // Remove old entries
-                foreach (var key in _requestCounts.Keys)
+                foreach (DateTime key in _requestCounts.Keys)
                 {
                     if (key < windowStart)
                     {
-                        _requestCounts.TryRemove(key, out _);
+                        _ = _requestCounts.TryRemove(key, out _);
                     }
                 }
 
                 // Calculate the total number of requests in the current window
                 int requestCount = 0;
-                foreach (var count in _requestCounts.Values)
+                foreach (int count in _requestCounts.Values)
                 {
                     requestCount += count;
                 }
 
                 if (requestCount < _maxRequests)
                 {
-                    _requestCounts.AddOrUpdate(now, 1, (key, value) => value + 1);
+                    _ = _requestCounts.AddOrUpdate(now, 1, (key, value) => value + 1);
                     return true;
                 }
 

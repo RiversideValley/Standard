@@ -22,7 +22,7 @@ namespace Riverside.Runtime
         /// <param name="expiration">The expiration time for the cache item. If null, the default expiration time is used.</param>
         public void Set(TKey key, TValue value, TimeSpan? expiration = null)
         {
-            var cacheItem = new CacheItem(value, DateTime.UtcNow + (expiration ?? _defaultExpiration));
+            CacheItem cacheItem = new(value, DateTime.UtcNow + (expiration ?? _defaultExpiration));
             _cache[key] = cacheItem;
         }
 
@@ -34,7 +34,7 @@ namespace Riverside.Runtime
         /// <returns>True if the cache contains an element with the specified key and it has not expired; otherwise, false.</returns>
         public bool TryGet(TKey key, out TValue value)
         {
-            if (_cache.TryGetValue(key, out var cacheItem) && cacheItem.Expiration > DateTime.UtcNow)
+            if (_cache.TryGetValue(key, out CacheItem cacheItem) && cacheItem.Expiration > DateTime.UtcNow)
             {
                 value = cacheItem.Value;
                 return true;
@@ -53,7 +53,7 @@ namespace Riverside.Runtime
         /// <returns>A task that represents the asynchronous operation. The task result contains the value associated with the specified key.</returns>
         public async Task<TValue> GetOrAddAsync(TKey key, Func<Task<TValue>> valueFactory, TimeSpan? expiration = null)
         {
-            if (TryGet(key, out var value))
+            if (TryGet(key, out TValue value))
             {
                 return value;
             }

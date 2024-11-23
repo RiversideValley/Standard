@@ -20,7 +20,9 @@ namespace Riverside.Runtime
         public static async Task<T> ExecuteAsync<T>(Func<Task<T>> operation, int maxRetries = 3, TimeSpan? delay = null)
         {
             if (maxRetries < 1)
+            {
                 throw new ArgumentOutOfRangeException(nameof(maxRetries), "Max retries must be greater than or equal to 1.");
+            }
 
             delay ??= TimeSpan.FromSeconds(2);
 

@@ -9,7 +9,7 @@ namespace Riverside.Runtime
     /// <typeparam name="T">The type of elements in the priority queue.</typeparam>
     public class PriorityQueue<T>
     {
-        private readonly List<(T item, int priority)> _elements = new();
+        private readonly List<(T item, int priority)> _elements = [];
 
         /// <summary>
         /// Gets the number of elements in the priority queue.
@@ -35,9 +35,11 @@ namespace Riverside.Runtime
         public T Dequeue()
         {
             if (_elements.Count == 0)
+            {
                 throw new InvalidOperationException("The priority queue is empty.");
+            }
 
-            var item = _elements[0].item;
+            T item = _elements[0].item;
             _elements.RemoveAt(0);
             return item;
         }
@@ -49,10 +51,7 @@ namespace Riverside.Runtime
         /// <exception cref="InvalidOperationException">Thrown when the priority queue is empty.</exception>
         public T Peek()
         {
-            if (_elements.Count == 0)
-                throw new InvalidOperationException("The priority queue is empty.");
-
-            return _elements[0].item;
+            return _elements.Count == 0 ? throw new InvalidOperationException("The priority queue is empty.") : _elements[0].item;
         }
     }
 }

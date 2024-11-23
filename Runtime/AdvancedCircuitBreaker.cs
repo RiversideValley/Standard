@@ -28,14 +28,9 @@ namespace Riverside.Runtime
             {
                 if (_state == CircuitBreakerState.Open)
                 {
-                    if (DateTime.UtcNow - _lastFailureTime > _resetTimeout)
-                    {
-                        _state = CircuitBreakerState.HalfOpen;
-                    }
-                    else
-                    {
-                        throw new InvalidOperationException("Circuit breaker is open.");
-                    }
+                    _state = DateTime.UtcNow - _lastFailureTime > _resetTimeout
+                        ? CircuitBreakerState.HalfOpen
+                        : throw new InvalidOperationException("Circuit breaker is open.");
                 }
             }
 
@@ -56,14 +51,7 @@ namespace Riverside.Runtime
                     _failureCount++;
                     _lastFailureTime = DateTime.UtcNow;
 
-                    if (_failureCount >= _maxFailures)
-                    {
-                        _state = CircuitBreakerState.Open;
-                    }
-                    else
-                    {
-                        _state = CircuitBreakerState.HalfOpen;
-                    }
+                    _state = _failureCount >= _maxFailures ? CircuitBreakerState.Open : CircuitBreakerState.HalfOpen;
                 }
                 throw;
             }

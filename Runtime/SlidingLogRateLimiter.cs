@@ -29,7 +29,7 @@ namespace Riverside.Runtime
                 // Remove timestamps outside the time window
                 while (_requestLog.TryPeek(out DateTime timestamp) && timestamp < windowStart)
                 {
-                    _requestLog.TryDequeue(out _);
+                    _ = _requestLog.TryDequeue(out _);
                 }
 
                 if (_requestLog.Count < _maxRequests)

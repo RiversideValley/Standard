@@ -47,7 +47,7 @@ namespace Riverside.Runtime
         public static async Task<string> FetchDataAsync(string url, CancellationToken cancellationToken = default)
         {
             HttpResponseMessage response = await _httpClient.GetAsync(url, cancellationToken);
-            response.EnsureSuccessStatusCode();
+            _ = response.EnsureSuccessStatusCode();
             return await response.Content.ReadAsStringAsync();
         }
 
@@ -67,7 +67,7 @@ namespace Riverside.Runtime
             return await RetryPolicy.ExecuteAsync(async () =>
             {
                 HttpResponseMessage response = await _httpClient.GetAsync(url, cancellationToken);
-                response.EnsureSuccessStatusCode();
+                _ = response.EnsureSuccessStatusCode();
                 return await response.Content.ReadAsStringAsync();
             });
         }
@@ -83,7 +83,7 @@ namespace Riverside.Runtime
             return await _circuitBreaker.ExecuteAsync(async () =>
             {
                 HttpResponseMessage response = await _httpClient.GetAsync(url, cancellationToken);
-                response.EnsureSuccessStatusCode();
+                _ = response.EnsureSuccessStatusCode();
                 return await response.Content.ReadAsStringAsync();
             });
         }
@@ -99,7 +99,7 @@ namespace Riverside.Runtime
             return await _rateLimiter.ExecuteAsync(async () =>
             {
                 HttpResponseMessage response = await _httpClient.GetAsync(url, cancellationToken);
-                response.EnsureSuccessStatusCode();
+                _ = response.EnsureSuccessStatusCode();
                 return await response.Content.ReadAsStringAsync();
             }, cancellationToken);
         }
@@ -125,7 +125,7 @@ namespace Riverside.Runtime
             await _debouncer.DebounceAsync(async () =>
             {
                 HttpResponseMessage response = await _httpClient.GetAsync(url);
-                response.EnsureSuccessStatusCode();
+                _ = response.EnsureSuccessStatusCode();
                 Console.WriteLine(await response.Content.ReadAsStringAsync());
             });
         }
@@ -141,7 +141,7 @@ namespace Riverside.Runtime
             await _throttler.ThrottleAsync(async () =>
             {
                 HttpResponseMessage response = await _httpClient.GetAsync(url, cancellationToken);
-                response.EnsureSuccessStatusCode();
+                _ = response.EnsureSuccessStatusCode();
                 Console.WriteLine(await response.Content.ReadAsStringAsync());
             }, cancellationToken);
         }
@@ -158,7 +158,7 @@ namespace Riverside.Runtime
             return await TimeoutPolicy.ExecuteAsync(async ct =>
             {
                 HttpResponseMessage response = await _httpClient.GetAsync(url, ct);
-                response.EnsureSuccessStatusCode();
+                _ = response.EnsureSuccessStatusCode();
                 return await response.Content.ReadAsStringAsync();
             }, timeout);
         }
@@ -174,7 +174,7 @@ namespace Riverside.Runtime
             return await _bulkhead.ExecuteAsync(async () =>
             {
                 HttpResponseMessage response = await _httpClient.GetAsync(url, cancellationToken);
-                response.EnsureSuccessStatusCode();
+                _ = response.EnsureSuccessStatusCode();
                 return await response.Content.ReadAsStringAsync();
             }, cancellationToken);
         }
@@ -190,7 +190,7 @@ namespace Riverside.Runtime
             return await _cache.GetOrAddAsync(url, async () =>
             {
                 HttpResponseMessage response = await _httpClient.GetAsync(url, cancellationToken);
-                response.EnsureSuccessStatusCode();
+                _ = response.EnsureSuccessStatusCode();
                 return await response.Content.ReadAsStringAsync();
             });
         }
@@ -206,7 +206,7 @@ namespace Riverside.Runtime
             return await ExponentialBackoffRetryPolicy.ExecuteAsync(async () =>
             {
                 HttpResponseMessage response = await _httpClient.GetAsync(url, cancellationToken);
-                response.EnsureSuccessStatusCode();
+                _ = response.EnsureSuccessStatusCode();
                 return await response.Content.ReadAsStringAsync();
             }, maxRetries: 5, initialDelay: TimeSpan.FromSeconds(1), cancellationToken: cancellationToken);
         }
@@ -222,7 +222,7 @@ namespace Riverside.Runtime
             return await _slidingWindowRateLimiter.ExecuteAsync(async () =>
             {
                 HttpResponseMessage response = await _httpClient.GetAsync(url, cancellationToken);
-                response.EnsureSuccessStatusCode();
+                _ = response.EnsureSuccessStatusCode();
                 return await response.Content.ReadAsStringAsync();
             }, cancellationToken);
         }
@@ -238,7 +238,7 @@ namespace Riverside.Runtime
             return await _semaphoreLock.ExecuteAsync(async () =>
             {
                 HttpResponseMessage response = await _httpClient.GetAsync(url, cancellationToken);
-                response.EnsureSuccessStatusCode();
+                _ = response.EnsureSuccessStatusCode();
                 return await response.Content.ReadAsStringAsync();
             }, cancellationToken);
         }
@@ -254,7 +254,7 @@ namespace Riverside.Runtime
             return await _advancedCircuitBreaker.ExecuteAsync(async () =>
             {
                 HttpResponseMessage response = await _httpClient.GetAsync(url, cancellationToken);
-                response.EnsureSuccessStatusCode();
+                _ = response.EnsureSuccessStatusCode();
                 return await response.Content.ReadAsStringAsync();
             });
         }
@@ -270,7 +270,7 @@ namespace Riverside.Runtime
             return await _tokenBucketRateLimiter.ExecuteAsync(async () =>
             {
                 HttpResponseMessage response = await _httpClient.GetAsync(url, cancellationToken);
-                response.EnsureSuccessStatusCode();
+                _ = response.EnsureSuccessStatusCode();
                 return await response.Content.ReadAsStringAsync();
             }, cancellationToken);
         }
@@ -292,7 +292,7 @@ namespace Riverside.Runtime
         /// <returns>The fetched data as a string.</returns>
         public static async Task<string> ProcessNextRequestAsync(CancellationToken cancellationToken = default)
         {
-            var (url, priority) = _priorityQueue.Dequeue();
+            (string url, _) = _priorityQueue.Dequeue();
             return await FetchDataAsync(url, cancellationToken);
         }
 
@@ -307,7 +307,7 @@ namespace Riverside.Runtime
             return await _leakyBucketRateLimiter.ExecuteAsync(async () =>
             {
                 HttpResponseMessage response = await _httpClient.GetAsync(url, cancellationToken);
-                response.EnsureSuccessStatusCode();
+                _ = response.EnsureSuccessStatusCode();
                 return await response.Content.ReadAsStringAsync();
             }, cancellationToken);
         }
@@ -333,7 +333,7 @@ namespace Riverside.Runtime
             return await _fixedWindowRateLimiter.ExecuteAsync(async () =>
             {
                 HttpResponseMessage response = await _httpClient.GetAsync(url, cancellationToken);
-                response.EnsureSuccessStatusCode();
+                _ = response.EnsureSuccessStatusCode();
                 return await response.Content.ReadAsStringAsync();
             }, cancellationToken);
         }
@@ -360,7 +360,7 @@ namespace Riverside.Runtime
             return await JitterRetryPolicy.ExecuteAsync(async () =>
             {
                 HttpResponseMessage response = await _httpClient.GetAsync(url, cancellationToken);
-                response.EnsureSuccessStatusCode();
+                _ = response.EnsureSuccessStatusCode();
                 return await response.Content.ReadAsStringAsync();
             }, maxRetries: 5, initialDelay: TimeSpan.FromSeconds(1), cancellationToken: cancellationToken);
         }
@@ -376,7 +376,7 @@ namespace Riverside.Runtime
             return await _slidingLogRateLimiter.ExecuteAsync(async () =>
             {
                 HttpResponseMessage response = await _httpClient.GetAsync(url, cancellationToken);
-                response.EnsureSuccessStatusCode();
+                _ = response.EnsureSuccessStatusCode();
                 return await response.Content.ReadAsStringAsync();
             }, cancellationToken);
         }
@@ -392,7 +392,7 @@ namespace Riverside.Runtime
             return await _dynamicTokenBucketRateLimiter.ExecuteAsync(async () =>
             {
                 HttpResponseMessage response = await _httpClient.GetAsync(url, cancellationToken);
-                response.EnsureSuccessStatusCode();
+                _ = response.EnsureSuccessStatusCode();
                 return await response.Content.ReadAsStringAsync();
             }, cancellationToken);
         }
@@ -416,7 +416,7 @@ namespace Riverside.Runtime
             return await _exponentialBackoffRateLimiter.ExecuteAsync(async () =>
             {
                 HttpResponseMessage response = await _httpClient.GetAsync(url, cancellationToken);
-                response.EnsureSuccessStatusCode();
+                _ = response.EnsureSuccessStatusCode();
                 return await response.Content.ReadAsStringAsync();
             }, cancellationToken);
         }

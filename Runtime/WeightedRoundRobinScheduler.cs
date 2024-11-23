@@ -53,7 +53,7 @@ namespace Riverside.Runtime
         private int GCD()
         {
             int gcd = _items[0].weight;
-            foreach (var item in _items)
+            foreach ((T item, int weight) item in _items)
             {
                 gcd = GCD(gcd, item.weight);
             }

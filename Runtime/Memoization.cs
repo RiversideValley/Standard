@@ -18,10 +18,10 @@ namespace Riverside.Runtime
         /// <returns>A memoized version of the specified function.</returns>
         public static Func<T, TResult> Memoize<T, TResult>(Func<T, TResult> func)
         {
-            var cache = new ConcurrentDictionary<T, TResult>();
+            ConcurrentDictionary<T, TResult> cache = new();
             return arg =>
             {
-                if (cache.TryGetValue(arg, out var result))
+                if (cache.TryGetValue(arg, out TResult result))
                 {
                     return result;
                 }
@@ -40,10 +40,10 @@ namespace Riverside.Runtime
         /// <returns>A memoized version of the specified asynchronous function.</returns>
         public static Func<T, Task<TResult>> MemoizeAsync<T, TResult>(Func<T, Task<TResult>> func)
         {
-            var cache = new ConcurrentDictionary<T, Task<TResult>>();
+            ConcurrentDictionary<T, Task<TResult>> cache = new();
             return async arg =>
             {
-                if (cache.TryGetValue(arg, out var result))
+                if (cache.TryGetValue(arg, out Task<TResult> result))
                 {
                     return await result;
                 }

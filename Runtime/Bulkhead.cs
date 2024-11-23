@@ -28,7 +28,7 @@ namespace Riverside.Runtime
             }
             finally
             {
-                _semaphore.Release();
+                _ = _semaphore.Release();
             }
         }
 
@@ -48,7 +48,7 @@ namespace Riverside.Runtime
             }
             finally
             {
-                _semaphore.Release();
+                _ = _semaphore.Release();
             }
         }
     }

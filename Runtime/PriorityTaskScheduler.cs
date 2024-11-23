@@ -33,7 +33,7 @@ namespace Riverside.Runtime
                 _taskQueues[priority].Enqueue(task);
             }
 
-            Task.Run(() => ProcessTasks());
+            _ = Task.Run(ProcessTasks);
         }
 
         /// <summary>
@@ -49,14 +49,14 @@ namespace Riverside.Runtime
 
                 lock (_lock)
                 {
-                    foreach (var priority in _taskQueues.Keys.OrderByDescending(p => p))
+                    foreach (int priority in _taskQueues.Keys.OrderByDescending(p => p))
                     {
                         if (_taskQueues[priority].Count > 0)
                         {
                             taskToExecute = _taskQueues[priority].Dequeue();
                             if (_taskQueues[priority].Count == 0)
                             {
-                                _taskQueues.TryRemove(priority, out _);
+                                _ = _taskQueues.TryRemove(priority, out _);
                             }
                             break;
                         }
@@ -70,7 +70,7 @@ namespace Riverside.Runtime
             }
             finally
             {
-                _semaphore.Release();
+                _ = _semaphore.Release();
             }
         }
     }
