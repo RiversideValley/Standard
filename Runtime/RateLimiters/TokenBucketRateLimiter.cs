@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Riverside.Runtime
+namespace Riverside.Runtime.RateLimiters
 {
     /// <summary>
     /// Provides a token bucket rate limiter to control the rate of operations.

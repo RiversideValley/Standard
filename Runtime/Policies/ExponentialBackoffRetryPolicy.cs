@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Riverside.Runtime
+namespace Riverside.Runtime.Policies
 {
     /// <summary>
     /// Provides a retry policy with exponential backoff to handle transient failures.

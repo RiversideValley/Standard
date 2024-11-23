@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Riverside.Runtime
+namespace Riverside.Runtime.RateLimiters
 {
     /// <summary>
     /// Provides a throttling mechanism to limit the rate at which an action is executed.

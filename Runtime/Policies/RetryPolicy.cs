@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Riverside.Runtime
+namespace Riverside.Runtime.Policies
 {
     /// <summary>
     /// Provides a retry policy to handle transient failures.
