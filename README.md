@@ -51,3 +51,20 @@ The River2 convention (the second version of the Standard) was a bit more precis
 ###### Quoted text is taken from the [Esmerelda Semantics spec](https://github.com/RiversideValley/Esmerelda/issues/4), an internal specification on how Esme should (have) be(en) built to standard.
 
 The 3rd version of RVS, called RVSX, provides a clean, understandable way to build high quality apps, far less cluttered than previous iterations.
+
+---
+
+##### Here's a short summary of the most important RVSX/3 analyzers. For all of them, browse the [diagnostic analyzer](https://github.com/RiversideValley/Standard/blob/main/Standard/Analyzers.cs) source file.
+
+#### `RX00001` Projects must use a stable versioning system
+#### `RX00002` All projects must declare community health files
+#### `RX00003` Class libraries should be have Riverside Assembly declaration metadata
+#### `RX00004` Modern apps must derive their application definition from `Riverside.Runtime.Modern.UnifiedApp`
+#### `RX00005` All projects must use Riverside Toolkit and Runtime tools and helpers instead of declaring their own
+#### `RX00006` Projects must use Serilog for logging
+#### `RX00007` All related projects must be in a monorepo
+#### `RX00008` Projects must be localized using localization string resources if they are production ready
+#### `RX00009` All source files must explicitly define types
+#### `RX00010` All source files must be formatted cleanly to Riverside Standard code style
+
+###### Please note that these annotations and specifically their identifiers are subject to strong change.
