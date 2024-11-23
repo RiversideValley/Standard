@@ -6,9 +6,6 @@ namespace Riverside.Runtime
     /// <summary>
     /// Represents a circuit breaker that can be used to protect resources from being overwhelmed.
     /// </summary>
-    /// <remarks>
-    /// Initializes a new instance of the <see cref="CircuitBreaker"/> class.
-    /// </remarks>
     /// <param name="maxFailures">The maximum number of failures before the circuit breaker opens.</param>
     /// <param name="resetTimeout">The time to wait before attempting to reset the circuit breaker.</param>
     public class CircuitBreaker(int maxFailures, TimeSpan resetTimeout)
