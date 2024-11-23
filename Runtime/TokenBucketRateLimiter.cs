@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 
 namespace Riverside.Runtime
 {
+    /// <summary>
+    /// Provides a token bucket rate limiter to control the rate of operations.
+    /// </summary>
     public class TokenBucketRateLimiter(int bucketCapacity, int tokensPerInterval, TimeSpan interval)
     {
         private readonly int _bucketCapacity = bucketCapacity;
@@ -13,6 +16,10 @@ namespace Riverside.Runtime
         private DateTime _lastRefill = DateTime.UtcNow;
         private readonly object _lock = new();
 
+        /// <summary>
+        /// Attempts to consume a token from the bucket.
+        /// </summary>
+        /// <returns>True if a token was consumed; otherwise, false.</returns>
         public bool TryConsume()
         {
             lock (_lock)
@@ -29,6 +36,9 @@ namespace Riverside.Runtime
             }
         }
 
+        /// <summary>
+        /// Refills the tokens in the bucket based on the elapsed time.
+        /// </summary>
         private void RefillTokens()
         {
             var now = DateTime.UtcNow;
@@ -42,6 +52,13 @@ namespace Riverside.Runtime
             }
         }
 
+        /// <summary>
+        /// Executes the specified operation, ensuring that the rate of operations does not exceed the specified limit.
+        /// </summary>
+        /// <typeparam name="T">The type of the result produced by the operation.</typeparam>
+        /// <param name="operation">The operation to execute.</param>
+        /// <param name="cancellationToken">A token to cancel the operation.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the result of the operation.</returns>
         public async Task<T> ExecuteAsync<T>(Func<Task<T>> operation, CancellationToken cancellationToken = default)
         {
             while (!TryConsume())
@@ -52,6 +69,12 @@ namespace Riverside.Runtime
             return await operation();
         }
 
+        /// <summary>
+        /// Executes the specified operation, ensuring that the rate of operations does not exceed the specified limit.
+        /// </summary>
+        /// <param name="operation">The operation to execute.</param>
+        /// <param name="cancellationToken">A token to cancel the operation.</param>
+        /// <returns>A task that represents the asynchronous operation.</returns>
         public async Task ExecuteAsync(Func<Task> operation, CancellationToken cancellationToken = default)
         {
             while (!TryConsume())

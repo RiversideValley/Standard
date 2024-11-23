@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace Riverside.Runtime
 {
+    /// <summary>
+    /// Provides a fixed window rate limiter to control the rate of operations.
+    /// </summary>
     public class FixedWindowRateLimiter(int maxRequests, TimeSpan timeWindow)
     {
         private readonly int _maxRequests = maxRequests;
@@ -12,6 +15,10 @@ namespace Riverside.Runtime
         private readonly ConcurrentDictionary<DateTime, int> _requestCounts = new();
         private readonly object _lock = new();
 
+        /// <summary>
+        /// Attempts to consume a token from the rate limiter.
+        /// </summary>
+        /// <returns>True if a token was consumed; otherwise, false.</returns>
         public bool TryConsume()
         {
             lock (_lock)
@@ -45,6 +52,13 @@ namespace Riverside.Runtime
             }
         }
 
+        /// <summary>
+        /// Executes the specified operation, ensuring that the rate of operations does not exceed the specified limit.
+        /// </summary>
+        /// <typeparam name="T">The type of the result produced by the operation.</typeparam>
+        /// <param name="operation">The operation to execute.</param>
+        /// <param name="cancellationToken">A token to cancel the operation.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the result of the operation.</returns>
         public async Task<T> ExecuteAsync<T>(Func<Task<T>> operation, CancellationToken cancellationToken = default)
         {
             while (!TryConsume())
@@ -55,6 +69,12 @@ namespace Riverside.Runtime
             return await operation();
         }
 
+        /// <summary>
+        /// Executes the specified operation, ensuring that the rate of operations does not exceed the specified limit.
+        /// </summary>
+        /// <param name="operation">The operation to execute.</param>
+        /// <param name="cancellationToken">A token to cancel the operation.</param>
+        /// <returns>A task that represents the asynchronous operation.</returns>
         public async Task ExecuteAsync(Func<Task> operation, CancellationToken cancellationToken = default)
         {
             while (!TryConsume())

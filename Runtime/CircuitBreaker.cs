@@ -4,23 +4,29 @@ using System.Threading.Tasks;
 
 namespace Riverside.Runtime
 {
-    public class CircuitBreaker
+    /// <summary>
+    /// Represents a circuit breaker that can be used to protect resources from being overwhelmed.
+    /// </summary>
+    /// <remarks>
+    /// Initializes a new instance of the <see cref="CircuitBreaker"/> class.
+    /// </remarks>
+    /// <param name="maxFailures">The maximum number of failures before the circuit breaker opens.</param>
+    /// <param name="resetTimeout">The time to wait before attempting to reset the circuit breaker.</param>
+    public class CircuitBreaker(int maxFailures, TimeSpan resetTimeout)
     {
-        private readonly int _maxFailures;
-        private readonly TimeSpan _resetTimeout;
-        private int _failureCount;
-        private DateTime _lastFailureTime;
-        private bool _isOpen;
+        private readonly int _maxFailures = maxFailures;
+        private readonly TimeSpan _resetTimeout = resetTimeout;
+        private int _failureCount = 0;
+        private DateTime _lastFailureTime = DateTime.MinValue;
+        private bool _isOpen = false;
 
-        public CircuitBreaker(int maxFailures, TimeSpan resetTimeout)
-        {
-            _maxFailures = maxFailures;
-            _resetTimeout = resetTimeout;
-            _failureCount = 0;
-            _lastFailureTime = DateTime.MinValue;
-            _isOpen = false;
-        }
-
+        /// <summary>
+        /// Executes the specified operation with circuit breaker protection.
+        /// </summary>
+        /// <typeparam name="T">The type of the result produced by the operation.</typeparam>
+        /// <param name="operation">The operation to execute.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the result of the operation.</returns>
+        /// <exception cref="InvalidOperationException">Thrown when the circuit breaker is open.</exception>
         public async Task<T> ExecuteAsync<T>(Func<Task<T>> operation)
         {
             if (_isOpen)

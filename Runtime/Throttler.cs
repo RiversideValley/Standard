@@ -4,19 +4,23 @@ using System.Threading.Tasks;
 
 namespace Riverside.Runtime
 {
-    public class Throttler
+    /// <summary>
+    /// Provides a throttling mechanism to limit the rate at which an action is executed.
+    /// </summary>
+    /// <param name="maxRequests">The maximum number of requests allowed in the specified time window.</param>
+    /// <param name="timeWindow">The time window for the rate limit.</param>
+    public class Throttler(int maxRequests, TimeSpan timeWindow)
     {
-        private readonly SemaphoreSlim _semaphore;
-        private readonly TimeSpan _timeWindow;
-        private DateTime _lastExecutionTime;
+        private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(maxRequests, maxRequests);
+        private readonly TimeSpan _timeWindow = timeWindow;
+        private DateTime _lastExecutionTime = DateTime.MinValue;
 
-        public Throttler(int maxRequests, TimeSpan timeWindow)
-        {
-            _semaphore = new SemaphoreSlim(maxRequests, maxRequests);
-            _timeWindow = timeWindow;
-            _lastExecutionTime = DateTime.MinValue;
-        }
-
+        /// <summary>
+        /// Executes the specified action with throttling.
+        /// </summary>
+        /// <param name="action">The action to execute.</param>
+        /// <param name="cancellationToken">A token to cancel the operation.</param>
+        /// <returns>A task that represents the asynchronous operation.</returns>
         public async Task ThrottleAsync(Func<Task> action, CancellationToken cancellationToken = default)
         {
             await _semaphore.WaitAsync(cancellationToken);
@@ -41,4 +45,3 @@ namespace Riverside.Runtime
         }
     }
 }
-
