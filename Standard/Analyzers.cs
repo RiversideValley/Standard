@@ -11,9 +11,9 @@ namespace Riverside.Standard
     public class Analyzers : DiagnosticAnalyzer
     {
         public const string DiagnosticId = "RX00001";
-        private static readonly LocalizableString Title = "Class must derive from Riverside.Runtime.AppEx";
-        private static readonly LocalizableString MessageFormat = "Class '{0}' must derive from Riverside.Runtime.AppEx";
-        private static readonly LocalizableString Description = "Ensure that App class derives from Riverside.Runtime.AppEx.";
+        private static readonly LocalizableString Title = "Class must derive from Riverside.Runtime.Modern.UnifiedApp";
+        private static readonly LocalizableString MessageFormat = "Class '{0}' must derive from Riverside.Runtime.UnifiedApp";
+        private static readonly LocalizableString Description = "Ensure that App class derives from Riverside.Runtime.UnifiedApp.";
         private const string Category = "Naming";
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DiagnosticId, Title, MessageFormat, Category, DiagnosticSeverity.Warning, isEnabledByDefault: true, description: Description);
 
