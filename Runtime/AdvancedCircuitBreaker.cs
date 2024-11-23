@@ -4,23 +4,14 @@ using System.Threading.Tasks;
 
 namespace Riverside.Runtime
 {
-    public class AdvancedCircuitBreaker
+    public class AdvancedCircuitBreaker(int maxFailures, TimeSpan resetTimeout)
     {
-        private readonly int _maxFailures;
-        private readonly TimeSpan _resetTimeout;
-        private int _failureCount;
-        private DateTime _lastFailureTime;
-        private CircuitBreakerState _state;
+        private readonly int _maxFailures = maxFailures;
+        private readonly TimeSpan _resetTimeout = resetTimeout;
+        private int _failureCount = 0;
+        private DateTime _lastFailureTime = DateTime.MinValue;
+        private CircuitBreakerState _state = CircuitBreakerState.Closed;
         private readonly object _lock = new();
-
-        public AdvancedCircuitBreaker(int maxFailures, TimeSpan resetTimeout)
-        {
-            _maxFailures = maxFailures;
-            _resetTimeout = resetTimeout;
-            _failureCount = 0;
-            _lastFailureTime = DateTime.MinValue;
-            _state = CircuitBreakerState.Closed;
-        }
 
         public async Task<T> ExecuteAsync<T>(Func<Task<T>> operation)
         {
