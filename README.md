@@ -19,8 +19,35 @@ The `Riverside.Standard` class library contains helpers and classes that complem
 
 This class library contains various resources that enable the implementation of the Riverside Standard in an agnostic manner.
 
+### `Riverside.Runtime.Modern`
+
+This class library targets WinUI3 and contains useful classes for building production apps using the latest technologies. It targets `net8.0-windows10.0.19041.0`.
+
 ---
 
 Previous versions of the Riverside Standard had a different versioning system as they were dictated by supplemental convention; the River1 and River2 style conventions were very badly organised and their definitions were often stored in unexpected, internal documentation.
+
+The first version of the Standard (River1) included requirements across everywhere - PRs, issues and commits were forced to have emoji appended to them; it had its own set of open source licenses; and most importantly versioning:
+> The _River1_ convention stated that each version should use the following format:
+> | Major | . | Minor | . | Build No. | @ | Channel |
+> |--------|--------|--------|--------|--------|--------|--------|
+> | 1 | **.** | 2 | **.** | 3 | **@** | `dev` |
+
+The River2 convention (the second version of the Standard) was a bit more precise, but still with classic targets like emoji in commit names, issues, PRs and other places, but with a more professional outlook:
+> So instead, Esmerelda should use the new _River2_ convention, at which the following are determined:
+> - Each push to `main` triggers an automatic GitHub Actions/Azure Pipelines integration to build and publish a package to GitHub Releases as a _prerelease_.
+> - A branch protection rule is put in place to allow nobody to push directly to `main` except in emergencies, and therefore the technique named _General Updates_ is used instead to manage this lifecycle, grouping individual small commits to a larger squashed commit/PR named a General Update, which has its own convention for naming schemes.
+> - There are only _two_ channels which are pushed to, the `release` channel and the `prerelease` channel. The prerelease channel is automatically published to a Microsoft flight group on push to `main` and automatic creation of a prerealease in GitHub Releases.
+> - After careful review, the primary production channel which is seen on GitHub Releases and on the MPN/Storefront is published to automatically via a manually triggered GitHub Action cycle.
+> - This may change to automatic after a certain increment in build number, i.e. every 10 build number increments (every 10 commits)
+> - It should probably be in such a way as that every time the minor version is increased, the app publishes to the storefronts, so every 10 commits as aforementioned.
+> 
+> The River2 convention follows the following pattern:
+> 
+> | Major | . | Minor | . | Build No. |
+> |--------|--------|--------|--------|--------|
+> | 1 | **.** | 2 | **.** | 3 |
+
+###### Quoted text is taken from the [Esmerelda Semantics spec](https://github.com/RiversideValley/Esmerelda/issues/4), an internal specification on how Esme should (have) be(en) built to standard.
 
 The 3rd version of RVS, called RVSX, provides a clean, understandable way to build high quality apps, far less cluttered than previous iterations.
