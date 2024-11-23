@@ -30,7 +30,7 @@ namespace Riverside.Runtime
                     _currentIndex = (_currentIndex + 1) % _items.Count;
                     if (_currentIndex == 0)
                     {
-                        _currentWeight = _currentWeight - Gcd();
+                        _currentWeight -= GCD();
                         if (_currentWeight <= 0)
                         {
                             _currentWeight = MaxWeight();
@@ -53,12 +53,12 @@ namespace Riverside.Runtime
         /// Calculates the greatest common divisor (GCD) of the weights.
         /// </summary>
         /// <returns>The GCD of the weights.</returns>
-        private int Gcd()
+        private int GCD()
         {
             int gcd = _items[0].weight;
             foreach (var item in _items)
             {
-                gcd = Gcd(gcd, item.weight);
+                gcd = GCD(gcd, item.weight);
             }
             return gcd;
         }
@@ -69,7 +69,7 @@ namespace Riverside.Runtime
         /// <param name="a">The first integer.</param>
         /// <param name="b">The second integer.</param>
         /// <returns>The GCD of the two integers.</returns>
-        private int Gcd(int a, int b)
+        private int GCD(int a, int b)
         {
             while (b != 0)
             {
