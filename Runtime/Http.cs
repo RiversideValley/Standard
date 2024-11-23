@@ -11,8 +11,10 @@ namespace Riverside.Runtime
 {
     /// <summary>
     /// Provides various methods to fetch data with different rate limiting and retry policies.
-    /// This class serves as an example for the various functions Riverside.Runtime exposes.
     /// </summary>
+    /// <remarks>
+    /// This class serves as an example for the various functions Riverside.Runtime exposes.
+    /// </remarks>
     public class Http
     {
         private static readonly HttpClient _httpClient = new();
